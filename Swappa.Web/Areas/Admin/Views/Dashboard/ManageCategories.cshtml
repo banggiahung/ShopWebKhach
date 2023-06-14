@@ -1,0 +1,52 @@
+@model Swappa.ApplicationCore.Models.Category
+<div class="pcoded-main-container">
+    <div class="pcoded-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Dashboard Analytics</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html"><i class="fa-solid fa-house"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#!">Manage Categories</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-6 col-md-12" style="top: -90px;left:10px;max-width:98.5%">
+        <div class="card table-card">
+            <div class="card-header">
+                <h5>Manage Categories</h5>
+                <div class="card-header-right">
+                    <div class="btn-group card-option">
+                        <a class="btn btn-primary rounded" asp-controller="Dashboard" asp-action="CreateUser" asp-area="Admin">Create Category</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>FullName</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                                <th>Address</th>
+                                <th>Role</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    

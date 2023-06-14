@@ -1,0 +1,583 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<style>
+    .active1 {
+        border-bottom: 2px solid #000;
+    }
+
+    .chooseDtmt span {
+        font-weight: 600;
+        color: #000;
+    }
+
+        .chooseDtmt span:hover {
+            background: #fff;
+            color: #000;
+            cursor: pointer !important;
+            opacity: 0.7;
+        }
+
+        .chooseDtmt span:hover {
+            cursor: pointer;
+            font-weight: 800;
+        }
+
+    #getSubItems table,
+    #getListItems table {
+        border-collapse: collapse; /* Loại bỏ khoảng cách giữa các ô */
+        width: 100%;
+    }
+
+    #getListItems th, #getSubItems th, #getSubItems td, #getListItems td {
+        border: 1px solid black; /* Border đơn màu đen */
+        padding: 8px; /* Khoảng cách từ nội dung đến border */
+        text-align: left;
+    }
+</style>
+<div id="Admin_vue">
+    <div class="d-flex mb-2 chooseDtmt mt-2">
+
+        <div style="margin-right:1em">
+            <span :class="{ active1: isTabActive('SanPham') }" v-on:click.prevent="setActiveTab('SanPham')">Sản phẩm</span>
+        </div>
+        <div style="margin-right:1em">
+            <span :class="{ active1: isTabActive('Category') }" v-on:click.prevent="setActiveTab('Category')">Danh mục</span>
+
+        </div>
+        <div>
+            <span :class="{ active1: isTabActive('SubCategory') }" v-on:click.prevent="setActiveTab('SubCategory')">Danh mục sub</span>
+
+        </div>
+    </div>
+    <div id="SanPham" v-show="isTabActive('SanPham')">
+        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#Add" v-on:click="getSub" >Thêm</button>
+
+        <table id="getListItems" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID sản phẩm</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Mô tả sản phẩm</th>
+                    <th>Giá sản phẩm</th>
+                    <th>Trạng thái</th>
+                    <th>Số Lượng sản phẩm</th>
+                    <th>Danh mục</th>
+                    <th>Ảnh sản phẩm</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody v-for="items in dataItems">
+                <tr :key="items.productId">
+                    <td>
+
+                        {{items.productId}}
+                    
+                    </td>
+                    <td>{{items.product_Name}}</td>
+                    <td>{{items.product_Description}}</td>
+                    <td>
+                        {{ new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(items.product_Price) }}
+
+
+                    </td>
+                    <td>{{items.product_Status}}</td>
+                    <td>{{items.product_Quantity}}</td>
+                    <td>{{items.subCategory.subCategory_Name}}</td>
+                    <td>
+                        <img :src="items.product_ImagePath" style="width: 100%; border-radius: 0% !important; height:auto" />
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Edit" v-on:click="getItemsById(items.productId)">Sửa</button>|
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#Delete" v-on:click="getItemsByIdDelete(items.productId)">Xóa|</button>
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#Details" v-on:click="getItemsById(items.productId)">Chi tiết</button>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+    <div id="SubCate" v-show="isTabActive('Category')">
+        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#AddSub">Thêm</button>
+
+        <table id="getSubItems" class="table table-bordered" style="border: 1px solid #fff !important;">
+            <thead>
+                <tr>
+                    <th>Tên danh mục</th>
+                    <th>Ảnh danh mục</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody v-for="item in cateItems">
+                <tr :key="item.categoryId">
+                    <td>{{item.category_Name}}</td>
+                    <td>
+                        <img :src="item.category_Image" style="width: 100%; border-radius: 0% !important; height:auto" />
+                    </td>
+
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EditSub" v-on:click="getItemsByIdCate(item.categoryId)">Sửa</button>|
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#DeleteSub" v-on:click="getItemsByIdDeleteCate(item.categoryId)">Xóa</button>|
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#DetailsCate" v-on:click="getItemsByIdCate(items.categoryId)">Chi tiết</button>
+
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="SubCategory" v-show="isTabActive('SubCategory')">
+        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#AddSubCategory">Thêm</button>
+
+        <table id="getSubItemsCate" class="table table-bordered" style="border: 1px solid #fff !important;">
+            <thead>
+                <tr>
+                    <th>ID danh mục</th>
+                    <th>Tên danh mục</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody v-for="itemSub in subItems">
+                <tr :key="itemSub.subCategoryId">
+                    <td>{{itemSub.subCategoryId}}</td>
+                    <td>{{itemSub.subCategory_Name}}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EditSubCategory" v-on:click="getItemsByIdCateSub(itemSub.subCategoryId)">Sửa</button>|
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#DeleteSubCategory" v-on:click="getItemsByIdDeleteCateSub(itemSub.subCategoryId)">Xóa</button>|
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#DetailsSubCategory" v-on:click="getItemsByIdCateSub(itemSub.subCategoryId)">Chi tiết</button>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal fade" id="AddSubCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm sub danh mục</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <input type="hidden" v-model="SubCategoryId" :value="SubCategoryId" id="SubCategoryId" />
+                        <div class="mb-3">
+                            <label for="SubCategory_Name" class="form-label">Tên danh mục</label>
+                            <input type="text" v-model="SubCategory_Name" :value="SubCategory_Name" class="form-control" id="SubCategory_Name">
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" v-on:click="addProductsSubCategory">Lưu thay đổi</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="EditSubCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Sửa danh mục</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="mb-3">
+                            <label for="SubCategoryId" class="form-label">ID sub danh mục</label>
+                            <input type="text" v-model="SubCategoryId" :value="SubCategoryId" class="form-control" id="SubCategoryId" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="SubCategory_Name" class="form-label">Tên danh mục</label>
+                            <input type="text" v-model="SubCategory_Name" :value="SubCategory_Name" class="form-control" id="SubCategory_Name">
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" v-on:click="editProductsSubCategory">Lưu thay đổi</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="DetailsSubCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Chi tiết danh mục</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="mb-3">
+                            <label for="SubCategoryId" class="form-label">ID sub danh mục</label>
+                            <input type="text" v-model="SubCategoryId" :value="SubCategoryId" class="form-control" id="SubCategoryId" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="SubCategory_Name" class="form-label">Tên danh mục</label>
+                            <input type="text" v-model="SubCategory_Name" :value="SubCategory_Name" class="form-control" id="SubCategory_Name" readonly>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="Edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Sửa sản phẩm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" v-on:click="resetData"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <img :src="product_ImagePath" style="width: 100%" />
+                                    <p>Ảnh đang có</p>
+                                </div>
+                                <div class="col-md-12">
+                                    <label>
+                                        Chọn ảnh
+                                    </label>
+                                    <input type="file" ref="PrPath2" v-on:change="onFileChange" accept="image/*">
+                                    <img :src="previewImage" alt="" style="width:50%" />
+                                    <p>Ảnh mới</p>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-lg-8 col-md-4 col-12">
+                            <input type="hidden" v-model="productId" :value="productId" id="productId" />
+                            <div class="mb-3">
+                                <label for="product_Number" class="form-label">Số sản phẩm</label>
+                                <input type="text" v-model="product_Number" :value="product_Number" class="form-control" id="product_Number">
+                            </div>
+                            <div class="mb-3">
+                                <label for="product_Name" class="form-label">Tên sản phẩm</label>
+                                <input type="text" v-model="product_Name" :value="product_Name" class="form-control" id="product_Name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="product_Description" class="form-label">Mô tả</label>
+                                <input type="text" v-model="product_Description" :value="product_Description" class="form-control" id="product_Description">
+                            </div>
+                            <div class="mb-3">
+                                <label for="product_Price" class="form-label">Giá sản phẩm</label>
+                                <input type="text" v-model="product_Price" :value="product_Price" class="form-control" id="product_Price">
+                            </div>
+                            <div class="mb-3">
+                                <label for="product_Status" class="form-label">Trạng thái</label>
+                                <input type="text" v-model="product_Status" :value="product_Status" class="form-control" id="product_Status">
+                            </div>
+                            <div class="mb-3">
+                                <label for="product_Quantity" class="form-label">Số Lượng sản phẩm</label>
+                                <input type="text" v-model="product_Quantity" :value="product_Quantity" class="form-control" id="product_Quantity">
+                            </div>
+                            <div class="mb-3">
+
+                                <label class="control-label">Danh mục</label>
+                                <select v-model="subCategoryId" class="form-control" style="width:100%;">
+                                    <option v-for="tp in subItems" v-bind:key="tp.subCategoryId" v-bind:value="tp.subCategoryId">{{ tp.subCategory_Name }}</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" v-on:click="resetData">Đóng</button>
+                    <button type="button" class="btn btn-primary" v-on:click="editProducts">Lưu thay đổi</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="Details" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Chi tiết sản phẩm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" v-on:click="resetData"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <img :src="product_ImagePath" style="width: 100%" />
+                                    <p>Ảnh đang có</p>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-lg-8 col-md-4 col-12">
+                            <input type="hidden" v-model="productId" :value="productId" id="productId" />
+                            <div class="mb-3">
+                                <label for="product_Number" class="form-label">Số sản phẩm</label>
+                                <input type="text" v-model="product_Number" :value="product_Number" class="form-control" id="product_Number" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="product_Name" class="form-label">Tên sản phẩm</label>
+                                <input type="text" v-model="product_Name" :value="product_Name" class="form-control" id="product_Name" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="product_Description" class="form-label">Mô tả</label>
+                                <input type="text" v-model="product_Description" :value="product_Description" class="form-control" id="product_Description" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="product_Price" class="form-label">Giá sản phẩm</label>
+                                <input type="text" v-model="product_Price" :value="product_Price" class="form-control" id="product_Price" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="product_Status" class="form-label">Trạng thái</label>
+                                <input type="text" v-model="product_Status" :value="product_Status" class="form-control" id="product_Status" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="product_Quantity" class="form-label">Số Lượng sản phẩm</label>
+                                <input type="text" v-model="product_Quantity" :value="product_Quantity" class="form-control" id="product_Quantity" readonly>
+                            </div>
+                            <div class="mb-3">
+
+                                <label class="control-label">Danh mục</label>
+                                <select v-model="subCategoryId" class="form-control" style="width:100%;" disabled>
+                                    <option v-for="tp in subItems" v-bind:key="tp.subCategoryId" v-bind:value="tp.subCategoryId">{{ tp.subCategory_Name }}</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" v-on:click="resetData">Đóng</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="Add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm sản phẩm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <img :src="product_ImagePath" style="width: 100%" />
+                                    <p>Ảnh đang có</p>
+                                </div>
+                                <div class="col-md-12">
+                                    <label>
+                                        Chọn ảnh
+                                    </label>
+                                    <input type="file" ref="PrPath" v-on:change="onFileChange" accept="image/*">
+                                    <img :src="previewImage" alt="" style="width:50%" />
+                                    <p>Ảnh mới</p>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-lg-8 col-md-4 col-12">
+                            <input type="hidden" v-model="productId" :value="1" id="productId" />
+                            <div class="mb-3">
+                                <label for="product_Number" class="form-label">Số sản phẩm</label>
+                                <input type="text" v-model="product_Number" :value="product_Number" class="form-control" id="product_Number">
+                            </div>
+                            <div class="mb-3">
+                                <label for="product_Name" class="form-label">Tên sản phẩm</label>
+                                <input type="text" v-model="product_Name" :value="product_Name" class="form-control" id="product_Name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="product_Description" class="form-label">Mô tả</label>
+                                <input type="text" v-model="product_Description" :value="product_Description" class="form-control" id="product_Description">
+                            </div>
+                            <div class="mb-3">
+                                <label for="product_Price" class="form-label">Giá sản phẩm</label>
+                                <input type="text" v-model="product_Price" :value="product_Price" class="form-control" id="product_Price">
+                            </div>
+                            <div class="mb-3">
+                                <label for="product_Status" class="form-label">Trạng thái</label>
+                                <input type="text" v-model="product_Status" :value="product_Status" class="form-control" id="product_Status">
+                            </div>
+                            <div class="mb-3">
+                                <label for="product_Quantity" class="form-label">Số Lượng sản phẩm</label>
+                                <input type="text" v-model="product_Quantity" :value="product_Quantity" class="form-control" id="product_Quantity">
+                            </div>
+                            <div class="mb-3">
+
+                                <label class="control-label">Danh mục</label>
+                                <select v-model="subCategoryId" class="form-control" style="width:100%;">
+                                    <option v-for="tp in subItems" v-bind:key="tp.subCategoryId" v-bind:value="tp.subCategoryId">{{ tp.subCategory_Name }}</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" v-on:click="addProducts">Lưu sản phẩm</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="EditSub" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Sửa danh mục</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="hidden" v-model="CategoryId" :value="CategoryId" id="CategoryId" />
+
+                        <div class="mb-3">
+                            <label for="Category_Name" class="form-label">Danh mục tên</label>
+                            <input type="text" v-model="Category_Name" :value="Category_Name" class="form-control" id="Category_Name">
+                        </div>
+                        <div class="mb-3">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <img :src="Category_Image" style="width: 100%" />
+                                    <p>Ảnh đang có</p>
+                                </div>
+                                <div class="col-md-12">
+                                    <label>
+                                        Chọn ảnh
+                                    </label>
+                                    <input type="file" ref="CatePath1" v-on:change="onFileChange1" accept="image/*">
+                                    <img :src="previewImage1" alt="" style="width:50%" />
+                                    <p>Ảnh mới</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" v-on:click="editProductsCate">Lưu thay đổi</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="DetailsCate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Chi tiết danh mục</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="hidden" v-model="CategoryId" :value="CategoryId" id="CategoryId" />
+
+                        <div class="mb-3">
+                            <label for="Category_Name" class="form-label">Danh mục tên</label>
+                            <input type="text" v-model="Category_Name" :value="Category_Name" class="form-control" id="Category_Name" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <img :src="Category_Image" style="width: 100%" />
+                                    <p>Ảnh đang có</p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="AddSub" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm danh mục</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="hidden" v-model="CategoryId" :value="CategoryId" id="CategoryId" />
+                        <div class="mb-3">
+                            <label for="Category_Name" class="form-label">Danh mục tên</label>
+                            <input type="text" v-model="Category_Name" :value="Category_Name" class="form-control" id="Category_Name">
+                        </div>
+                        <div class="mb-3">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <img :src="Category_Image" style="width: 100%" />
+                                    <p>Ảnh đang có</p>
+                                </div>
+                                <div class="col-md-12">
+                                    <label>
+                                        Chọn ảnh
+                                    </label>
+                                    <input type="file" ref="CatePath" v-on:change="onFileChange1" accept="image/*">
+                                    <img :src="previewImage1" alt="" style="width:50%" />
+                                    <p>Ảnh mới</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" v-on:click="addProductsCate">Thêm mới</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/js/admin_crud/admin_crudvuejs.js"></script>

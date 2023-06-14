@@ -1,0 +1,576 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web</title>
+    <link rel="stylesheet" href="~/css/min.css" />
+    <link rel="stylesheet" href="~/fontawesome/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/Style.css" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg" id="main-bg">
+        <div class="container-fluid">
+            <div class="d-flex">
+                <button class="navbar-toggler " type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <i class="fas fa-bars " style="color: #fff;font-size :36px;"></i>
+                </button>
+                <button class="btn tm-search-btn log_in" type="submit">
+                    <i class='bx bx-help-circle f-s-50'></i>
+                </button>
+                <button class="btn tm-search-btn log_in" type="submit">
+                    <i class='bx bx-dollar-circle f-s-50'></i>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse d-block flex-column" id="navbarSupportedContent">
+                <div class="offcanvas-header">
+                    <h3 class="mt-auto mb-auto offcanvas-title">
+                        <div class="fa-fw d-inline-block me-1">
+                            <img src="https://static.swappa.com/static/images/logos/swappa_logo_ffffff.svg" alt="" />
+                        </div>
+                        Save with Swappa
+                    </h3>
+                    <button class="btn-close text-reset mt-auto mb-auto ml-3"></button>
+                </div>
+                <div class="offcanvas-body mt-3">
+                    <div class="row row-cols-2 mb-3">
+                        <div class="col-6">
+                            <a href="./login.html" class="btn btn-login d-block">Login</a>
+                        </div>
+                        <div class="col-6">
+                            <a href="./register.html" class="btn btn-login btn-register d-block">Register</a>
+                        </div>
+                        <div class="col-6 w-100 mt-3">
+
+                            <div class="side-menu-modal w-100">
+                                <a href="#">
+                                    <i class='bx bx-search'></i> Search
+                                    <span class="float-end">
+                                        <i class='bx bx-dots-horizontal-rounded'></i>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="side-menu-modal">
+                                <a href="#">
+                                    <i class='bx bx-help-circle'></i> Help
+                                    <span class="float-end">
+                                        <i class='bx bx-dots-horizontal-rounded'></i>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="side-menu-modal">
+                                <a href="#">
+                                    <i class='bx bx-dollar-circle'></i> Sell
+                                    <span class="float-end">
+                                        <i class='bx bx-dots-horizontal-rounded'></i>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="side-menu-modal">
+                                <a href="#">
+                                    <i class='bx bx-candles'></i> Trade-In
+                                    <span class="float-end">
+                                        <i class='bx bx-dots-horizontal-rounded'></i>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="side-menu-modal">
+                                <a href="#">
+                                    <i class='bx bx-store-alt'></i> Cart
+                                    <span class="float-end">
+                                        <i class='bx bx-dots-horizontal-rounded'></i>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="side-menu-modal">
+                                <a href="#">
+                                    <i class='bx bx-location-plus'></i> Local
+                                    <span class="float-end">
+                                        <i class='bx bx-dots-horizontal-rounded'></i>
+                                    </span>
+                                </a>
+                            </div>
+                            <h4 class="mt-3">Shop</h4>
+                            <div class="side-menu-modal">
+                                <a href="#iphone-items">
+                                    <i class='bx bxl-apple'></i> iPhones
+                                    <span class="float-end">
+                                        <i class='bx bx-dots-horizontal-rounded'></i>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="side-menu-modal">
+                                <a href="#">
+                                    <i class='bx bx-mobile-alt'></i> Phones
+                                    <span class="float-end">
+                                        <i class='bx bx-dots-horizontal-rounded'></i>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="side-menu-modal">
+                                <a href="#laptop-items">
+                                    <i class='bx bx-laptop'></i> Laptop and MacBooks
+                                    <span class="float-end">
+                                        <i class='bx bx-dots-horizontal-rounded'></i>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="side-menu-modal">
+                                <a href="#laptop-items">
+                                    <i class='bx bx-laptop'></i> Computer
+                                    <span class="float-end">
+                                        <i class='bx bx-dots-horizontal-rounded'></i>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="side-menu-modal">
+                                <a href="#watch-items">
+                                    <i class='bx bxs-watch-alt'></i> Watches and Wearables
+                                    <span class="float-end">
+                                        <i class='bx bx-dots-horizontal-rounded'></i>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="side-menu-modal">
+                                <a href="#ipad-items">
+                                    <i class='bx bxs-devices'></i> Tablets and iPads
+                                    <span class="float-end">
+                                        <i class='bx bx-dots-horizontal-rounded'></i>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a class="navbar-brand" href="./index.html">
+                <img class="logo-main" src="~/img/LogoMain.svg" alt="" />
+            </a>
+            <div>
+                <button class="btn tm-search-btn log_in" type="submit">
+                    <i class='bx bx-universal-access nav-link-12 f-s-50'></i>
+                </button>
+                <a href="/Customer/Home/CartDetails">
+                    <button class="btn  tm-search-btn shopping" type="submit">
+                        <i class='bx bxs-shopping-bag-alt f-s-50'></i>
+                        <div class="position-absolute top-0 start-100 translate-middle-x px-2 bg-info badge rounded-pill padpa">
+                            2
+                        </div>
+                    </button>
+                </a>
+                <button class="btn  tm-search-btn search_card" type="submit">
+                    <i class="fas fa-search f-s-50"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <section class="section-body ">
+        <div class="list-hedder hide_navbar" id="list-head">
+            <ul class="d-flex justify-content-center" style="height: 36px;">
+                <li>
+                    <a href="#">Iphone<i class='bx bxs-down-arrow' id="none-icon"></i></a>
+                    <ul class="sub-nav hovered">
+                        <li>
+                            <a class="text-gray-dark" href="#">Unlocked</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">IphoneXr</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">Iphone11</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">Iphone12</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Phone<i class='bx bxs-down-arrow' id="none-icon"></i></a>
+                    <ul class="sub-nav hovered">
+                        <li>
+                            <a class="text-gray-dark" href="#">Apple</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">samsung</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">google</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">tmobile</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Laptop<i class='bx bxs-down-arrow' id="none-icon"></i></a>
+                    <ul class="sub-nav hovered">
+                        <li>
+                            <a class="text-gray-dark" href="#">macbooks</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">macbook pro</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">macbook air</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">window</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Computer<i class='bx bxs-down-arrow' id="none-icon" id="none-icon"></i></a>
+                    <ul class="sub-nav hovered">
+                        <li>
+                            <a class="text-gray-dark" href="#">laptop</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">macbooks</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">imac</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">window</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Watches<i class='bx bxs-down-arrow' id="none-icon"></i></a>
+                    <ul class="sub-nav hovered">
+                        <li>
+                            <a class="text-gray-dark" href="#">apple watch</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">samsung watch</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">android watch</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">see more</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Tablets<i class='bx bxs-down-arrow' id="none-icon"></i></a>
+                    <ul class="sub-nav hovered">
+                        <li>
+                            <a class="text-gray-dark" href="#">ipad</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">samsung</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">window</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">amazon</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Video Games<i class='bx bxs-down-arrow' id="none-icon"></i></a>
+                    <ul class="sub-nav hovered">
+                        <li>
+                            <a class="text-gray-dark" href="#">playstation 5</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">playstation 3</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">playstation 4</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">playstation 2</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Home Tech<i class='bx bxs-down-arrow' id="none-icon"></i></a>
+                    <ul class="sub-nav hovered">
+                        <li>
+                            <a class="text-gray-dark" href="#">Unlocked</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">IphoneXr</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">Iphone11</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">Iphone12</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Cameras<i class='bx bxs-down-arrow' id="none-icon"></i></a>
+                    <ul class="sub-nav hovered">
+                        <li>
+                            <a class="text-gray-dark" href="#">amazon</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">google home</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">nest</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">santos</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Sell<i class='bx bxs-down-arrow' id="none-icon"></i></a>
+                    <ul class="sub-nav hovered">
+                        <li>
+                            <a class="text-gray-dark" href="#">iphone</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">macbooks</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">android</a>
+                        </li>
+                        <li>
+                            <a class="text-gray-dark" href="#">laptop</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+        <hr class="ine-header2">
+    </section>
+    <!-- main -->
+    <main class="flex-shrink-0">
+        <div class="container">
+         @RenderBody()
+
+        </div>
+    </main>
+
+    <!-- end main -->
+    <!-- footer -->
+    <footer class="footer mt-auto bg-fot">
+        <div class="container">
+            <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-6 mb-3 ms-sm-3 ms-md-5 ms-lg-3 ms-xl-5 " id="ca-3">
+                <div class="col mt-5">
+                    <ul>
+                        <li>
+                            <a href="#">Buy</a>
+                        </li>
+                        <li>
+                            <a href="#">Buyer Guides</a>
+                        </li>
+                        <li>
+                            <a href="#">Buy Phones</a>
+                        </li>
+                        <li>
+                            <a href="#">Buy Tablets</a>
+                        </li>
+                        <li>
+                            <a href="#">Buy MacBooks</a>
+                        </li>
+                        <li>
+                            <a href="#">Buy Laptops</a>
+                        </li>
+                        <li>
+                            <a href="#">Buy iPhones</a>
+                        </li>
+                        <li>
+                            <a href="#">Buy Apple</a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="col mt-5">
+                    <ul>
+                        <li>
+                            <a href="#">Unlocked</a>
+                        </li>
+                        <li>
+                            <a href="#">Video Games</a>
+                        </li>
+                        <li>
+                            <a href="#">Smartwatches</a>
+                        </li>
+                        <li>
+                            <a href="#">Cameras+Lenses</a>
+                        </li>
+                        <li>
+                            <a href="#">Home Tech</a>
+                        </li>
+                        <li>
+                            <a href="#">AirPods+Audio</a>
+                        </li>
+                        <li>
+                            <a href="#">Drones+DJI</a>
+                        </li>
+                        <li>
+                            <a href="#">Fitness+Cycling</a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="col mt-5">
+                    <ul>
+                        <li>
+                            <a href="#">Sell</a>
+                        </li>
+                        <li>
+                            <a href="#">Trade-in</a>
+                        </li>
+                        <li>
+                            <a href="#">Sell Phones</a>
+                        </li>
+                        <li>
+                            <a href="#">Sell Tablets</a>
+                        </li>
+                        <li>
+                            <a href="#">Sell MacBooks</a>
+                        </li>
+                        <li>
+                            <a href="#">Sell Laptops</a>
+                        </li>
+                        <li>
+                            <a href="#">Sell iPhones</a>
+                        </li>
+                        <li>
+                            <a href="#">Sell Apple</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col mt-5">
+                    <ul>
+                        <li>
+                            <a href="#">IMEI Check</a>
+                        </li>
+                        <li>
+                            <a href="#">Swappa Local</a>
+                        </li>
+                        <li>
+                            <a href="#">Download App</a>
+                        </li>
+                        <li>
+                            <a href="#">Catalog</a>
+                        </li>
+                        <li>
+                            <a href="#">Carriers</a>
+                        </li>
+                        <li>
+                            <a href="#">Phone Repair</a>
+                        </li>
+                        <li>
+                            <a href="#">Swappa vs. eBay</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col mt-5">
+                    <ul>
+                        <li>
+                            <a href="#">Help</a>
+                        </li>
+                        <li>
+                            <a href="#">FAQs</a>
+                        </li>
+                        <li>
+                            <a href="#">Search</a>
+                        </li>
+                        <li>
+                            <a href="#">ADA Accessibility</a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <Sustainability></Sustainability>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">Prices</a>
+                        </li>
+                        <li>
+                            <a href="#">Fees</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col mt-5">
+                    <ul>
+                        <li>
+                            <a href="#">About Swappa</a>
+                        </li>
+                        <li>
+                            <a href="#">Blog</a>
+                        </li>
+                        <li>
+                            <a href="#">Forums</a>
+                        </li>
+                        <li>
+                            <a href="#">Contact Us</a>
+                        </li>
+                        <li>
+                            <a href="#">Press</a>
+                        </li>
+                        <li>
+                            <a href="#">Policies</a>
+                        </li>
+                        <li>
+                            <a href="#">Terms of Use</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="row row-cols-1 row-cols-md-3">
+                <div class="mt-4 mb-4 col py-1 social_links d-flex justify-content-center align-items-center ">
+                    <a href="#" class="fz-f">
+                        <i class='bx bxl-facebook-circle'></i>
+                    </a>
+                    <a href="#" class="fz-f">
+                        <i class='bx bxl-instagram'></i>
+                    </a>
+                    <a href="#" class="fz-f">
+                        <i class='bx bxl-twitter'></i>
+                    </a>
+                    <a href="#" class="fz-f">
+                        <i class='bx bxl-linkedin'></i>
+                    </a>
+                    <a href="#" class="fz-f">
+                        <i class='bx bxl-telegram'></i>
+                    </a>
+                </div>
+                <div class="col py-1 d-flex justify-content-center align-items-center">
+                    <div class="last-logo">
+                        <a href="#">
+                            <img src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg"
+                                 alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="col py-1 d-flex justify-content-center align-items-center text-center">
+                    Copyright © 2010-2022 LA SON, LLC
+                </div>
+            </div>
+        </div>
+
+        </div>
+    </footer>
+</body>
+<script src="~/js/plugins.js"></script>
+<!-- jQuery -->
+
+<!-- Bootstrap 4 -->
+<script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+</html>

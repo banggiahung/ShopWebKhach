@@ -1,0 +1,380 @@
+﻿@model  Swappa.ApplicationCore.Models.Product
+@{
+    Layout = "/Views/Shared/_LayoutHeadAndFooter.cshtml";
+}
+
+<div id="Details_View">  
+    <input type="hidden" asp-for="ProductId" />
+    <input type="hidden" id="QuantityClient" value="1" />
+    <section class="section_breadcrumbs">
+        <nav aria-label="breadcrumb" style="margin-bottom: 0;">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"> <a class="color-green f-s-14" href="#">Swappa</a></li>
+                <li class="breadcrumb-item"> <a class="color-green f-s-14" href="#">Mobile</a></li>
+                <li class="breadcrumb-item"> <a class="color-green f-s-14" href="#">Apple iPhone 12</a></li>
+                <li class="breadcrumb-item">
+                    <a class="color-green f-s-14" href="#">Unlocked Purple 64GB</a>
+                </li>
+                <li class="breadcrumb-item"> <a class="color-dark f-s-14" href="#">LXAE44557</a></li>
+            </ul>
+        </nav>
+    </section>
+    <section class="mb-4">
+        <div class="d-flex justify-content-center justify-content-lg-start align-items-center flex-wrap mb-3">
+            <h1 class="mb-1 me-3 mr-3 f-s-2">
+                @Model.Product_Name
+            </h1>
+            <div class="mb-1 text-center">
+                <div class="newSingle mb-1 mb-md-0">@Model.Product_Number</div>
+                @*<div class="newSingle mb-1 mb-md-0">Unlocked</div>
+                <div class="newSingle mb-1 mb-md-0">64 GB</div>
+                <div class="newSingle mb-1 mb-md-0">Purple</div>
+                <div class="newSingle mb-1 mb-md-0">A2172</div>*@
+            </div>
+            <div class="d-lg-block mx-auto me-lg-0 mb-lg-1">
+                <div class="d-inline-block newlabel-sm color-orange border-0">
+                    <i class='bx bxs-star'> Featured</i>
+                </div>
+                <div class="newSingle newSingle-sm text-primary border-0">
+                    <i class='bx bx-check'> Approved</i>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="mb-4">
+        <div class="row mb-3 gy-2">
+            <div class="col-lg-8">
+                <div class="img-details-single">
+                    <div class="row">
+                        <div class="col-6 col-sm-3 mb-3">
+                            <div class="position-relative text-center border rounded cur">
+                                <img src="@Model.Product_ImagePath"
+                                     alt="" class="img-fluid">
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-3 mb-3">
+                            <div class="position-relative text-center border rounded cur">
+                                <img src="@Model.Product_ImagePath"
+                                     alt="" class="img-fluid">
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-3 mb-3">
+                            <div class="position-relative text-center border rounded cur">
+                                <img src="@Model.Product_ImagePath"
+                                     alt="" class="img-fluid">
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-3 mb-3">
+                            <div class="position-relative text-center border rounded cur">
+                                <img src="@Model.Product_ImagePath"
+                                     alt="" class="img-fluid">
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-3 mb-3">
+                            <div class="position-relative text-center border rounded cur">
+                                <img src="@Model.Product_ImagePath"
+                                     alt="" class="img-fluid">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="photo-disclaimer p-2">
+                    <i class='fa-solid bx bx-info-circle'>
+                        <span>
+                            This seller fulfills orders from a stock or inventory pool. The pictures used on
+                            this
+                            listing represent the stock and may not be pictures of the actual device.
+                        </span>
+                    </i>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center align-items-center mb-3">
+                            <div class="listing_price text-primary">@Model.FormattedPrice</div>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="me-3">
+                                <button id="addCart" v-on:click="AddToCartVue" aria-label="Cart" rel="nofollow" class="btn btn-outline-primary ">
+                                    <i class='bx bx-cart-download'></i>
+                                </button>
+                            </div>
+                            <div>
+                                <a href="#" v-on:click="GetCart" class="btn btn-buy w-180">Buy Now</a>
+                            </div>
+                        </div>
+                        <hr class="my-3">
+                        <p class="text-center bg-detail ">
+                            <i class='bx bxl-paypal cl-blue-d'></i>
+                            <span class="color-dark f-s-12">
+                                As los as $27.47/mo. <a href="#">
+                                    Learn
+                                    more
+                                </a>
+                            </span>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <hr class="d-none d-lg-block">
+    <!--  -->
+    <div class="row mb-3 gy-2">
+        <div class="col-lg-8">
+            <div class="d-flex justify-content-start align-items-center mb-2">
+                <h2 class="mb-1 me-3">Carrier</h2>
+                <div class="mb-1 text-center">
+                    <div class="newSingle">@Model.SubCategory.SubCategory_Name</div>
+                </div>
+            </div>
+            <h3 class="m-0">Carrier Compatibility</h3>
+            <ul class="bullets d-inline">
+                <li>• Fair</li>
+                <li>• T-Mobile</li>
+                <li>• Unlocked</li>
+                <li>• Verizon</li>
+                <li>• TextNow</li>
+                <li>• US Cellular</li>
+                <li>• Consumer Cellular</li>
+                <li>• Cricket</li>
+            </ul>
+            <a href="#" class="d-inline-block ms-1 color-green">
+                <i class='fa-solid bx bx-chevron-down '></i>
+                more
+            </a>
+            <div class="mt-2">
+                IMEI
+                <i class='bx bx-check'></i>
+                <span class="color-green">@Model.Product_Number</span>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card text-center bg-gray-100 border-0">
+                <div class="card-body py-4">
+                    <a class="color-green" role="button" href="#">
+                        Other Unlocked listings
+                        <i class='vl-mid bx bxs-chevrons-right'></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="d-none d-lg-block">
+    <div class="row mb-3 gy-2">
+        <div class="col-lg-8">
+            <div class="d-flex justify-content-start align-items-center mb-2">
+                <h2 class="m-0 me-3">Condition</h2>
+                <div class="newSingle">Fair</div>
+            </div>
+            <ul>
+                <li>Noticeable wear and tear</li>
+                <li>Power cord/charger not required</li>
+                <li>Retail packaging and manuals not required</li>
+            </ul>
+            <h3 class="mb-2">Damage Description</h3>
+            <div class="text-block mb-3">
+                <p class="color-dark">@Model.Product_Description</p>
+            </div>
+            <p class="text-muted mb-0">
+                <i class='bx bx-info-circle'> </i>
+                <span>All devices must be fully functional and meet</span>
+                <a class="color-green" href="#">our criteria for sale</a>
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <div class="card text-center bg-gray-100 border-0">
+                <div class="card-body py-4">
+                    <a class="color-green" role="button" href="#">
+                        Similar listings
+                        <i class='vl-mid bx bxs-chevrons-right'></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="d-none d-lg-block">
+    <div class="row mb-3 gy-2">
+        <div class="col-lg-8">
+            <div class="d-flex flex-wrap justify-content-between align-items-center h-100">
+                <div class="d-flex justify-content-start">
+                    <div class="me-2 mr-2">
+                        <a href="#">
+                            <img class="rounded-circle"
+                                 src="https://static.swappa.com/images/cache/7c/96/7c96e1af3a1dc3ff4ea168bb242b0a03.jpg"
+                                 alt="" height="50" width="50">
+                        </a>
+                    </div>
+                    <div>
+                        <div class="color-green">
+                            <a class="color-green" href="#">TopTier Wireless LLC</a>
+                        </div>
+                        <div class="text-nowrap">
+                            <span class="stars text-success">
+                                <i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star-half'></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="fs-sm">
+                    <ul class="mb-0">
+                        <li>Member since 04/08/2022</li>
+                        <li>Listings: 926 total, 20 active</li>
+                    </ul>
+
+                </div>
+                <div class="d-none d-sm-block text-trusted bg-brie">
+                    <i class='bx bxs-briefcase' role="img"></i>
+                    Power Seller
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card text-center bg-gray-100 border-0">
+                <div class="card-body py-4">
+                    <a class="color-green" role="button" href="#">
+                        Other Seller
+                        <i class='vl-mid bx bxs-chevrons-right'></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="d-none d-lg-block">
+    <div class="card bg-gray-100 border-0 mb-3">
+        <div class="card-body py-2">
+            <span class="badge rounded-pill bg-light text-dark bod-day">
+                <i class='bx bxs-calendar'></i>
+                Created Jan 04, 2023
+            </span>
+            <span class="badge rounded-pill bg-light text-dark bod-day">
+                <i class='bx bxs-calendar-x'></i>
+                Updated Jan 04, 2023
+            </span>
+        </div>
+    </div>
+    <div class="mb-3">
+        <h2>@Model.Product_Name/64GB/UNLOCKED/PURPLE/FAIR CONDITION</h2>
+        <div class="text-block">
+            <p>@Model.Product_Name 64GB UNLOCKED!</p>
+            <p>FAIR CONDITION - SMALL LCD SPOT ON SCREEN, LIGHT SIGNS OF USE</p>
+            <p>FULLY FUNCTIONAL - TESTED VIA PHONECHECK!</p>
+            <p>LISTING INCLUDES DEVICE ONLY! NO ACCESSORIES!</p>
+            <p>FREE SHIPPING IN USA</p>
+            <p>LET ME KNOW IF ANY QUESTIONS!</p>
+        </div>
+    </div>
+    <div class="card text-center bg-gray-100 fw-bold bod-btn">
+        <div class="card-body py-4">
+            <span>Need more information?</span>
+            <a class="color-green" href="#">
+                Leave a comment
+                <i class='vl-mid bx bxs-chevrons-right'></i>
+            </a>
+        </div>
+    </div>
+    <hr class="d-none d-lg-block">
+    <div class="row mb-3 gy-2">
+        <div class="col-lg-8">
+            <h3 class="mb-1">
+                Shipping & Handling
+                <a class="btn color-green" href="#">
+                    Shipping Policies
+                </a>
+            </h3>
+            <p class="mb-1 color-dark">
+                <i class='bx bxs-edit-location'></i>
+                Ships from <span>Bronx, NY</span>
+            </p>
+            <p class="mb-1 color-dark">
+                <i class='bx bxs-car'></i>
+                <strong> Free</strong> Standard Shipping with <strong>Tracking & Insurance.</strong> <br>
+                <i class="fa fa-hi"></i>
+                Ships in 2 business days or less.
+            </p>
+            <p class="mb-1 color-dark">
+                <i class='bx bx-carousel'></i>
+                <strong> Seller not required to ship internationally, but will ship to </strong>
+                <a href="#" class="color-green">freight forwarders</a>
+            </p>
+        </div>
+        <div class="col-lg-4"></div>
+    </div>
+    <div class="row mb-3 gy-2">
+        <div class="col-lg-8">
+            <div class="text-block">
+                <p>All items ship within 2 business days. Weekends do not count as business days.</p>
+                <p>
+                    We will ship to freight forwarding companies as long as the address is US based and is the
+                    verified shipping address on PayPal.
+                </p>
+            </div>
+        </div>
+        <div class="col-lg-4"></div>
+    </div>
+    <hr class="d-none d-lg-block">
+    <div class="row mb-3 gy-2">
+        <div class="col-lg-8">
+            <h3 class="mb-1">
+                Returns & Refunds
+                <a class="btn color-green" href="#">
+                    Return Policies
+                </a>
+            </h3>
+            <ul class="text-muted">
+                <li>
+                    Eligible for <a class="color-green" href="#">PayPal Purchase Protection </a>, so you get
+                    what you paid for
+                </li>
+                <li>Items received not as described shall be returned to the seller for a prompt refund</li>
+            </ul>
+            <div class="text-block ">
+                <p class="color-dark">
+                    Defective items can be returned for a full refund. We will provide you a
+                    prepaid label via
+                    email.
+                </p>
+                <p class="color-dark">
+                    Order cancellations or wrong shipping addresses will be subject to a 5%
+                    restocking fee.
+                </p>
+                <p class="color-dark">We do not accept returns for buyers remorse at this time.</p>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body py-4">
+                    All seller return policies are based on the pre-condition that the device is received as
+                    advertised and <a class="color-green" href="#">in accordance with Swappa policies.</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="d-none d-lg-block">
+    <section class="section_trailer" style="margin-bottom: 10px">
+        <p class="text-center f-s-12">
+            Disclosure: This site contains affiliate links to other sites.
+            We may receive commissions for purchases made through these links.
+        </p>
+    </section>
+</div>
+<script src="~/js/customer_crud/details_crud.js"></script>
+<script>
+    $(document).ready(function () {
+        // Xử lý sự kiện click trên nút "Cart"
+        $('#addCart').click(function () {
+            // Gửi yêu cầu AJAX để cập nhật số lượng
+            $.ajax({
+                url: '/Customer/Home/UpdateCartQuantity', // Đường dẫn đến phương thức xử lý yêu cầu AJAX
+                type: 'POST',
+                success: function (data) {
+                    // Cập nhật số lượng trong header
+                    $('.badge').text(data);
+                }
+            });
+        });
+    });
+</script>

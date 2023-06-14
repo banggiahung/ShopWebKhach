@@ -1,0 +1,60 @@
+﻿@page
+@using Swappa.ApplicationCore.Utilities
+@model Swappa.Web.Areas.Identity.Pages.Account.RegisterModel;
+@{
+    ViewData["Title"] = "Register";
+}
+@if (User.IsInRole(WebsiteRole.Customer))
+{
+  
+}
+<div class="row justify-content-center">
+      <div class="col-lg-6 col-md-10 col-lg-offset-3 col-md-offset-1">
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h2>Create a new account.</h2>
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating">
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+                <label asp-for="Input.Email"></label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="Input.Password"></label>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+        </form>
+        <div class="mb-3 mt-3">
+          <button onclick="login()" class="btn btn-default btn-block btn-lg cl-black btn-google hover-but">
+            <img src="https://static.swappa.com/static/icons/social/login_google.png" alt="">
+            Log In with Google
+          </button>
+        </div>
+        <div class="row" style="margin: 15px 0;">
+          <div class="col-xs-3 col-md-4">
+            <hr>
+          </div>
+          <div class="col-xs-6 col-md-4 text-center">
+            <span style="color: #333333; font-size: 14px;">Or Log in with</span>
+          </div>
+          <div class="col-xs-3 col-md-4">
+            <hr>
+          </div>
+        </div>
+        <div class="mb-3 mt-3 ">
+          <button onclick="login()" class="btn btn-default btn-block btn-lg  btn-google cl-pp">
+            <i class='bx bxl-paypal cl-pp'></i>
+            Log In with PayPal
+          </button>
+        </div>
+        <hr style="margin: 20px 0;">
+
+      </div>
+    </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

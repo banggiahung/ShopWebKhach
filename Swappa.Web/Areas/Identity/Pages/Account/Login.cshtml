@@ -1,0 +1,117 @@
+﻿@page
+@model Swappa.Web.Areas.Identity.Pages.Account.LoginModel
+
+@{
+    ViewData["Title"] = "";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="login-box">
+    <div class="card">
+        <div class="card-body login-card-body" >
+            <img src="~/admin/images/LogoMain.svg" >
+            <p class="login-box-msg">Login to buy & sell used tech</p>
+
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Input.Email" class="form-label"></label>
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true">
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    @* <div class="input-group-append">
+                    <div class="input-group-text">
+                    <span class="fas fa-envelope"></span>
+                    </div>
+                    </div> *@
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Password" class="form-label"></label>
+                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password"
+                        aria-required="true" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    @* <div class="input-group-append">
+                    <div class="input-group-text">
+                    <span class="fas fa-lock"></span>
+                    </div>
+                    </div> *@
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <div class="icheck-primary">
+                            <label asp-for="Input.RememberMe" class="form-label">
+                                <input class="form-check-input" id="remember" asp-for="Input.RememberMe">
+                                @Html.DisplayNameFor(m => m.Input.RememberMe)
+                            </label>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
+
+            <div class="social-auth-links text-center mb-3">
+                
+                <!-- <a href="#" class="btn btn-block btn-primary">
+            <i class="fab fa-facebook mr-2"></i> Log in using Facebook
+            </a> -->
+                <!--<a href="#" class="btn btn-block btn-danger">
+                    <i class="fab fa-google-plus mr-2"></i> Log In with Google+
+                </a>-->
+                <a class="btn btn-default btn-block btn-lg btn-google" rel="nofollow"
+                    onclick="return gaLoginEvents('Google Login');" href="/login/google-oauth2/?next="
+                    title="Log In to Swappa using your Google account">
+                    <img src="https://static.swappa.com/static/icons/social/login_google.png" width="7%" alt="Google logo"
+                        aria-hidden="true">
+                    <span>Log In with Google</span>
+                </a>
+                <p>- OR -</p>
+                <a class="btn btn-default btn-block btn-lg btn-paypal" title="Log In to Swappa with your PayPal account"
+                    rel="nofollow" onclick="return gaLoginEvents('PayPal Login');" href="/login/paypal/?next=">
+                    <i class="fa-brands fa-paypal" alt="Log In with PayPal" aria-hidden="true"></i>
+                    <span>Log In with PayPal</span>
+                </a>
+            </div>
+            <!-- /.social-auth-links -->
+            <div class="row">
+                <div class="col-xs-6" style="font-size: 14px; text-align: center; padding-top: 5px;">
+					Need an account?
+				</div>
+                <div class="col-xs-6" style="display:none">
+                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+				</div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-xs-6" style="font-size: 14px; text-align: center; padding-top: 5px;">
+					Forget your password?
+				</div>
+                <div class="col-xs-6">
+					<a href="/registration/recover/" class="btn btn-default btn-block">
+						Recover Password
+					</a>
+				</div>
+            </div>
+           <!-- <p class="mb-1">
+                <a href="forgot-password.html">Forget your password?</a>
+            </p>
+            <p class="mb-0">
+                <a href="register.html" class="text-center">Need an account?</a>
+            </p>-->
+        </div>
+        <!-- /.login-card-body -->
+    </div>
+</div>
+
+@using Microsoft.AspNetCore.Identity
+
+
+
+@*
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}
+*@
